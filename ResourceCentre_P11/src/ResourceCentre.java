@@ -2,30 +2,34 @@ import java.util.ArrayList;
 
 public class ResourceCentre {
 
-
+	private static final int RETURN = 4;
+	private static final int LOAN = 3;
+	private static final int ADD = 2;
+	private static final int DISPLAY = 1;
+	/**
+	 * 
+	 */
+	private static final int QUIT = 5;
 	public static void main(String[] args) {
 
 		ArrayList<Camcorder> camcorderList = new ArrayList<Camcorder>();
 		ArrayList<Chromebook> chromebookList = new ArrayList<Chromebook>();
 
-		camcorderList.add(new Camcorder("CC001", "Sony HDR-CX405", 35));
-		camcorderList.add(new Camcorder("CC002", "Panasonic HC-MDH2", 10));
-		chromebookList.add(new Chromebook("CB001", "ASUS Chromebook ", "Win 10"));
-		chromebookList.add(new Chromebook("CB002", "HP Chromebook", "Win 10"));
+		ADD_ITEMS(camcorderList, chromebookList);
 
 		int option = 0;
 
-		while (option != 5) {
+		while (option != QUIT) {
 
 			ResourceCentre.menu();
 			option = Helper.readInt("Enter an option > ");
 
-			if (option == 1) {
+			if (option == DISPLAY) {
 				// View all items
 				ResourceCentre.viewAllCamcorder(camcorderList);
 				ResourceCentre.viewAllChromebook(chromebookList);
 
-			} else if (option == 2) {
+			} else if (option == ADD) {
 				// Add a new item
 				ResourceCentre.setHeader("ADD");			
 				ResourceCentre.setHeader("ITEM TYPES");
@@ -48,7 +52,7 @@ public class ResourceCentre {
 					System.out.println("Invalid type");
 				}
 
-			} else if (option == 3) {
+			} else if (option == LOAN) {
 				// Loan item
 				ResourceCentre.setHeader("LOAN");			
 				ResourceCentre.setHeader("ITEM TYPES");
@@ -67,7 +71,7 @@ public class ResourceCentre {
 					System.out.println("Invalid type");
 				}
 
-			} else if (option == 4) {
+			} else if (option == RETURN) {
 				// Return item
 				ResourceCentre.setHeader("RETURN");				
 				ResourceCentre.setHeader("ITEM TYPES");
@@ -85,7 +89,7 @@ public class ResourceCentre {
 					System.out.println("Invalid type");
 				}
 
-			} else if (option == 5) {
+			} else if (option == QUIT) {
 				System.out.println("Bye!");
 			} else {
 				System.out.println("Invalid option");
@@ -93,6 +97,17 @@ public class ResourceCentre {
 
 		}
 
+	}
+
+	/**
+	 * @param camcorderList
+	 * @param chromebookList
+	 */
+	private static void ADD_ITEMS(ArrayList<Camcorder> camcorderList, ArrayList<Chromebook> chromebookList) {
+		camcorderList.add(new Camcorder("CC001", "Sony HDR-CX405", 35));
+		camcorderList.add(new Camcorder("CC002", "Panasonic HC-MDH2", 10));
+		chromebookList.add(new Chromebook("CB001", "ASUS Chromebook ", "Win 10"));
+		chromebookList.add(new Chromebook("CB002", "HP Chromebook", "Win 10"));
 	}
 
 	public static void menu() {
@@ -127,7 +142,8 @@ public class ResourceCentre {
 	public static String retrieveAllCamcorder(ArrayList<Camcorder> camcorderList) {
 		String output = "";
 
-		for (int i = 0; i < camcorderList.size(); i++) {
+		int CAMCORDER_SIZE = camcorderList.size();
+		for (int i = 0; i < CAMCORDER_SIZE; i++) {
 
 			output += String.format("%-10s %-30s %-10s %-10s %-20d\n", camcorderList.get(i).getAssetTag(),
 					camcorderList.get(i).getDescription(), 
@@ -235,7 +251,8 @@ public class ResourceCentre {
 		// write your code here
 		boolean isLoaned = false;
 
-		for (int i = 0; i < chromebookList.size(); i++) {
+		int CHROMEBOOK_SIZE = chromebookList.size();
+		for (int i = 0; i < CHROMEBOOK_SIZE; i++) {
 			String assetTag = chromebookList.get(i).getAssetTag();
 			
 			if (tag.equalsIgnoreCase(assetTag)
